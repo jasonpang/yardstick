@@ -19,6 +19,11 @@ namespace YardstickTests
         /// </summary>
         public int ProfileIterations { get; set; }
 
+        /// <summary>
+        /// A dictionary of information to be displayed in the output formatter.
+        /// </summary>
+        public Dictionary<String, String> Info { get; set; }
+
         private int numElements = 1000000;
         private int[] numbers;
         private Random random = new Random();
@@ -28,6 +33,7 @@ namespace YardstickTests
             this.numElements = numElements;
             this.ProfileIterations = numIterations;
             this.TaskName = String.Format("Sorting an Array of {0} Elements", this.numElements);
+            this.Info = new Dictionary<string, string>();
         }
 
         /// <summary>

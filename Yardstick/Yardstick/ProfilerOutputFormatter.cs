@@ -14,6 +14,11 @@ namespace Yardstick
         /// </summary>
         public ProfilerResult Result { get; private set; }
 
+        /// <summary>
+        /// A dictionary of information to be displayed in the output formatter.
+        /// </summary>
+        public Dictionary<String, String> Info { get; set; }
+
         protected int SafeConsoleWidth
         {
             get
@@ -26,6 +31,7 @@ namespace Yardstick
         public ProfilerOutputFormatter(ProfilerResult result)
         {
             this.Result = result;
+            this.Info = new Dictionary<string, string>();
         }
 
         public override string ToString()
@@ -78,8 +84,19 @@ namespace Yardstick
             display.Append(this.DrawBoxBodyText(String.Format("          High Outliers: {0}", this.Result.PrunedHighOutliers.ToLimitedString(4) )));
             display.Append(this.DrawBoxBodyText(String.Format("          Average per Call: {0:n} ms", this.Result.PrunedAverageTime)));
             display.Append(this.DrawBoxBodyText(String.Format("          Standard Deviation: {0:n} ms", this.Result.PrunedStandardDeviation)));
+
+            if (this.Info.Count > 0)
+            {
+                display.Append(this.DrawBoxBodyText(" "));
+                foreach (var info in this.Info)
+                {
+                    display.Append(this.DrawBoxBodyText(String.Format("{0}: {1}", info.Key, info.Value)));
+                }
+            }
+
             display.Append(this.DrawBoxBodyText(" "));
             display.Append(this.DrawBoxBottom());
+
             return display.ToString();
         }
 
