@@ -58,6 +58,16 @@ namespace Yardstick
             display.Append(this.DrawBoxBodyText(" "));
             display.Append(this.DrawBoxBodyText(String.Format("Number of Iterations: {0}", this.Result.ProfiledInstance.ProfileIterations)));
             display.Append(this.DrawBoxBodyText(String.Format("Total Elapsed Time: {0:n} ms", this.Result.TotalTime)));
+
+            if (this.Result.ProfiledInstance.Info.Count > 0)
+            {
+                display.Append(this.DrawBoxBodyText(" "));
+                foreach (var info in this.Result.ProfiledInstance.Info)
+                {
+                    display.Append(this.DrawBoxBodyText(String.Format("{0}: {1}", info.Key, info.Value)));
+                }
+            }
+
             display.Append(this.DrawBoxBodyText(" "));
             display.Append(this.DrawBoxBodyText("     Before Pruning:"));
             display.Append(this.DrawBoxBodyText(String.Format("          Average per Call: {0:n} ms", this.Result.AverageTime)));

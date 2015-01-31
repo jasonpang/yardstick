@@ -22,6 +22,11 @@ namespace Yardstick
         int ProfileIterations { get; set; }
 
         /// <summary>
+        /// A dictionary of information to be displayed in the output formatter.
+        /// </summary>
+        Dictionary<String, String> Info { get; set; }
+
+        /// <summary>
         /// Performs initialization and setup tasks that are not to be profiled.
         /// </summary>
         void Setup();
