@@ -99,9 +99,12 @@ namespace Yardstick.Extensions
             limit = Math.Min(values.Count, limit);
             StringBuilder display = new StringBuilder();
             display.Append("[");
-            for (int i = 0; i < limit; i++)
-                display.Append(values[i] + ", ");
-            display = display.Remove(display.Length - 2, 2);
+            if (limit > 0)
+            {
+                for (int i = 0; i < limit; i++)
+                    display.Append(values[i] + ", ");
+                display = display.Remove(display.Length - 2, 2);
+            }
             display.Append("]");
             return display.ToString();
         }
