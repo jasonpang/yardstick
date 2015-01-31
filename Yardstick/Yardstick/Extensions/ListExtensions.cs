@@ -91,6 +91,11 @@ namespace Yardstick.Extensions
                 }
             }
 
+            lowOutliers.Sort();
+
+            highOutliers.Sort();
+            highOutliers.Reverse();
+
             return new Tuple<List<double>, List<double>>(lowOutliers, highOutliers);
         }
 
