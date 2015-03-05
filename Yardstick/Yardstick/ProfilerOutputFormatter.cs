@@ -69,12 +69,16 @@ namespace Yardstick
             display.Append(this.DrawBoxBodyText(" "));
             display.Append(this.DrawBoxBodyText("     Before Pruning:"));
             display.Append(this.DrawBoxBodyText(String.Format("          Average per Call: {0:n} ms", this.Result.AverageTime)));
+            display.Append(this.DrawBoxBodyText(String.Format("          Median Call: {0:n} ms", this.Result.MedianTime)));
+            display.Append(this.DrawBoxBodyText(String.Format("          Variance: {0:n} ms", this.Result.Variance)));
             display.Append(this.DrawBoxBodyText(String.Format("          Standard Deviation: {0:n} ms", this.Result.StandardDeviation)));
             display.Append(this.DrawBoxBodyText(" "));
             display.Append(this.DrawBoxBodyText("     After Pruning:"));
             display.Append(this.DrawBoxBodyText(String.Format("          Low Outliers: {0}", this.Result.PrunedLowOutliers.ToLimitedString(4) )));
             display.Append(this.DrawBoxBodyText(String.Format("          High Outliers: {0}", this.Result.PrunedHighOutliers.ToLimitedString(4) )));
             display.Append(this.DrawBoxBodyText(String.Format("          Average per Call: {0:n} ms", this.Result.PrunedAverageTime)));
+            display.Append(this.DrawBoxBodyText(String.Format("          Median Call: {0:n} ms", this.Result.PrunedMedianTime)));
+            display.Append(this.DrawBoxBodyText(String.Format("          Variance: {0:n} ms", this.Result.PrunedVariance)));
             display.Append(this.DrawBoxBodyText(String.Format("          Standard Deviation: {0:n} ms", this.Result.PrunedStandardDeviation)));
 
             if (this.Info.Count > 0)

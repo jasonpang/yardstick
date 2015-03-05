@@ -30,19 +30,37 @@ namespace Yardstick
         public double AverageTime { get; private set; }
 
         /// <summary>
+        /// Gets the unpruned median running time in milliseconds of Run().
+        /// </summary>
+        public double MedianTime { get; private set; }
+
+        /// <summary>
+        /// Gets the unpruned variance.
+        /// </summary>
+        public double Variance { get; private set; }
+
+        /// <summary>
         /// Gets the unpruned standard deviation of the records.
         /// </summary>
         public double StandardDeviation { get; private set; }
 
         /// <summary>
         /// Gets a pruned average running time in milliseconds of Run().
-        /// Records below or above the mean by the standard deviation amount are discarded.
         /// </summary>
         public double PrunedAverageTime { get; private set; }
 
         /// <summary>
+        /// Gets a pruned median running time in milliseconds of Run().
+        /// </summary>
+        public double PrunedMedianTime { get; private set; }
+
+        /// <summary>
+        /// Gets the pruned variance.
+        /// </summary>
+        public double PrunedVariance { get; private set; }
+
+        /// <summary>
         /// Gets a pruned standard deviation of the records.
-        /// Records below or above the mean by the standard deviation amount are discarded, and the standard deviation is recalculated.
         /// </summary>
         public double PrunedStandardDeviation { get; private set; }
 
@@ -71,13 +89,19 @@ namespace Yardstick
         /// </summary>
         public void ProcessResults()
         {
+            Records.Sort();
+
             this.TotalTime = Records.Sum();
             this.AverageTime = Records.Mean();
+            this.MedianTime = Records.Median();
+            this.Variance = Records.Variance();
             this.StandardDeviation = Records.StandardDeviation();
 
             var tupleOutliers = Records.Prune();
 
             this.PrunedAverageTime = Records.Mean();
+            this.PrunedMedianTime = Records.Median();
+            this.PrunedVariance = Records.Variance();
             this.PrunedStandardDeviation = Records.StandardDeviation();
             this.PrunedLowOutliers = tupleOutliers.Item1;
             this.PrunedHighOutliers = tupleOutliers.Item2;

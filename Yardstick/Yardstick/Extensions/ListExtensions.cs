@@ -14,6 +14,17 @@ namespace Yardstick.Extensions
             return values.Count == 0 ? 0 : values.Mean(0, values.Count);
         }
 
+        public static double Median(this List<double> values)
+        {
+            if (values.Count == 1)
+                return values.First();
+
+            int medianIndex = values.Count / 2;
+            return (values.Count % 2 == 0) ?
+                (values[medianIndex - 1] + values[medianIndex]) / 2 :
+                (values[medianIndex]);
+        }
+
         public static double Mean(this List<double> values, int start, int end)
         {
             double s = 0;
@@ -65,12 +76,19 @@ namespace Yardstick.Extensions
         }
 
         /// <summary>
-        /// Removes values lower or higher than the standard deviation from the list, and respectively returns the low and high outliers.
+        /// Removes values lower or higher than (Q1 - IQR) or (Q3 + IQR) respectively, and returns the first few low and high outliers.
         /// </summary>
         public static Tuple<List<double>, List<double>> Prune(this List<double> values)
         {
-            double standardDeviation = values.StandardDeviation();
-            double mean = values.Mean();
+            // Get the value at the 75th percentile
+            int Q3Index = (int)(values.Count * 0.75); 
+            double Q3Value = values[Q3Index];
+
+            // Get the value at the 25th percentile
+            int Q1Index = (int)(values.Count * 0.25);
+            double Q1Value = values[Q1Index];
+
+            double interQuartileRange = 1.5 * (Q3Value - Q1Value);
 
             List<double> lowOutliers = new List<double>();
             List<double> highOutliers = new List<double>();
@@ -79,12 +97,12 @@ namespace Yardstick.Extensions
             {
                 double value = values[i];
 
-                if (((mean - value) > 0) && (Math.Abs(mean - value) > standardDeviation))
+                if (value < Q1Value - interQuartileRange)
                 {
                     lowOutliers.Add(value);
                     values.Remove(value);
                 }
-                else if (((mean - value) < 0) && (Math.Abs(mean - value) > standardDeviation))
+                else if (value > Q3Value + interQuartileRange)
                 {
                     highOutliers.Add(value);
                     values.Remove(value);
