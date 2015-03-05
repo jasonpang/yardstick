@@ -12,7 +12,7 @@ namespace YardstickTests
         static void Main(string[] args)
         {
             ProfilerResult result = Profiler.Profile(new ArraySortTest(numIterations: 34, numElements: 1000000));
-            new ProfilerDefaultOutputFormatter(result).DisplayResults();
+            Console.WriteLine(new ProfilerConsoleOutputFormatter(result));
             Console.WriteLine("Finished.");
             Console.ReadLine();
         }

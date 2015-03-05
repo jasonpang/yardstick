@@ -19,6 +19,22 @@ namespace Yardstick
         /// </summary>
         public Dictionary<String, String> Info { get; set; }
 
+        public ProfilerOutputFormatter(ProfilerResult result)
+        {
+            this.Result = result;
+            this.Info = new Dictionary<string, string>();
+        }
+
+        public override abstract string ToString();
+    }
+
+    public class ProfilerConsoleOutputFormatter : ProfilerOutputFormatter
+    {
+        public ProfilerConsoleOutputFormatter(ProfilerResult result)
+            : base(result)
+        {
+        }
+
         protected int SafeConsoleWidth
         {
             get
@@ -26,30 +42,6 @@ namespace Yardstick
                 return (int)(Console.WindowWidth * 0.90);
             }
             set { }
-        }
-
-        public ProfilerOutputFormatter(ProfilerResult result)
-        {
-            this.Result = result;
-            this.Info = new Dictionary<string, string>();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
-
-        public virtual void DisplayResults()
-        {
-            Console.WriteLine(this.ToString());
-        }
-    }
-
-    public class ProfilerDefaultOutputFormatter : ProfilerOutputFormatter
-    {
-        public ProfilerDefaultOutputFormatter(ProfilerResult result)
-            : base(result)
-        {
         }
 
         public override string ToString()
